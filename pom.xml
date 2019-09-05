@@ -11,7 +11,7 @@
     <groupId>com.xyt</groupId>
     <artifactId>user-mucon</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>user-mucon</name>
+    <name>xyt-user-mucon</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
