@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyt.usermucon.dao.PerMapper">
+    <resultMap id="ResultPerMap" type="com.xyt.usermucon.dto.PerDto">
+        <id column="id" property="id" jdbcType="VARCHAR"/><!-- 主键 -->
+        <result column="name" property="name" jdbcType="VARCHAR"/><!--  姓名 -->
+        <result column="sex" property="sex" jdbcType="VARCHAR"/><!--  性别（0：男、1：女） -->
+        <result column="age" property="age" jdbcType="INTEGER"/><!--  年龄 -->
+        <result column="classNo" property="classNo" jdbcType="INTEGER"/><!--  班级序号 -->
+        <collection property = "achDtos" ofType = "com.xyt.usermucon.dto.AchDto" >
+            <result column="perId" property="perId" jdbcType="VARCHAR"/><!-- 外键 -->
+            <result column="subjectName" property="subjectName" jdbcType="VARCHAR"/><!--  科目名称 -->
+            <result column="achievement" property="achievement" jdbcType="INTEGER"/><!-- 成绩 -->
+            <result column="workTime" property="workTime" jdbcType="VARCHAR"/><!-- 当前时间 -->
+        </collection>
+    </resultMap>
+
+    <!-- 注释：方法描述 -->
+    <select id="getPerAndAchList1" resultMap="ResultPerMap" >
+        SELECT
+            main.id AS id
+            ,main.name AS name
+            ,CASE main.sex
+            WHEN 0 THEN '男'
+            ELSE '女'
+            END AS sex
+            ,main.age AS age
+            ,main.classNo AS classNo
+            ,Sub1.perId AS perId
+            ,Sub1.subjectName AS subjectName
+            ,Sub1.achievement AS achievement
+            ,DATE_FORMAT(Sub1.workTime,'%Y-%m-%d') AS workTime
+        FROM t_person AS main
+        INNER JOIN t_achievement AS Sub1 ON main.id = Sub1.perId
+    </select>
+</mapper>
