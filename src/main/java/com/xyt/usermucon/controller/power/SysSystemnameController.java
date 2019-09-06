@@ -26,17 +26,17 @@ public class SysSystemnameController {
 
     /**
      * 系统-查询系统列表
-     * @param pageNo
+     * @param pageNum
      * @param pageSize
      * @param example
      * @return
      */
     @GetMapping("/querySystemInfo")
     public PageInfo querySystemInfo(
-            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
             SysSystemnameExample example) {
-        PageHelper.startPage(pageNo, pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<SysSystemname> list=this.sysSystemnameService.selectByExample(example);
         PageInfo pageInfo = new PageInfo<>(list,pageSize);
         return pageInfo;

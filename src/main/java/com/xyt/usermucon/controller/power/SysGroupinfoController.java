@@ -27,17 +27,17 @@ public class SysGroupinfoController {
 
     /**
      * 查询一级菜单列表
-     * @param pageNo
+     * @param pageNum
      * @param pageSize
      * @param example
      * @return
      */
     @GetMapping("/queryGroupinfo")
     public PageInfo queryGroupinfo(
-            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
             SysGroupinfoExample example) {
-        PageHelper.startPage(pageNo, pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<SysGroupinfo> list=this.sysSysGroupinfoService.selectByExample(example);
         PageInfo pageInfo = new PageInfo<>(list,pageSize);
         return pageInfo;
@@ -59,8 +59,9 @@ public class SysGroupinfoController {
      * @return
      */
     @GetMapping("/queryGroupinfoById")
-    public Map<String,Object> queryGroupinfoById(String id){
-        return this.sysSysGroupinfoService.selectByPrimaryKey(id);
+    public Map<String,Object> queryGroupinfoById(String id,@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                                 @RequestParam(value = "pageSize", defaultValue = "10") int pageSize){
+        return this.sysSysGroupinfoService.selectByPrimaryKey(id,pageNum,pageSize);
     }
 
     /**

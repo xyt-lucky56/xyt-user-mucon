@@ -20,7 +20,7 @@ public interface SysGroupinfoService {
 
     List<SysGroupinfo> selectByExample(SysGroupinfoExample example);
 
-    Map<String,Object> selectByPrimaryKey(String id);
+    Map<String,Object> selectByPrimaryKey(String id,int pageNum,int pageSize);
 
     int updateByPrimaryKey(SysGroupinfo record);
 }

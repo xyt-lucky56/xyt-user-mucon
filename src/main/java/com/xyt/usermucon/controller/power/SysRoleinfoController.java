@@ -26,17 +26,17 @@ public class SysRoleinfoController {
 
     /**
      * 角色-查询角色列表
-     * @param pageNo
+     * @param pageNum
      * @param pageSize
      * @param example
      * @return
      */
     @GetMapping("/queryRoleInfo")
     public PageInfo queryRoleInfo(
-            @RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
             SysRoleinfoExample example) {
-        PageHelper.startPage(pageNo, pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<SysRoleinfo> list=this.SysRoleinfoService.selectByExample(example);
         PageInfo pageInfo = new PageInfo<>(list,pageSize);
         return pageInfo;

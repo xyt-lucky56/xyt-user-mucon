@@ -1,12 +1,16 @@
 package com.xyt.usermucon.server.impl.power;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xyt.usermucon.common.BizException;
 import com.xyt.usermucon.common.ToolUtils;
 import com.xyt.usermucon.dao.power.SysGroupinfoMapper;
 import com.xyt.usermucon.dao.power.SysGrouplinkpowerMapper;
 import com.xyt.usermucon.dao.power.SysPowerinfoMapper;
+import com.xyt.usermucon.dto.PerDto;
 import com.xyt.usermucon.dto.power.SysGroupinfo;
 import com.xyt.usermucon.dto.power.SysGroupinfoExample;
+import com.xyt.usermucon.dto.power.SysPowerinfo;
 import com.xyt.usermucon.server.power.SysGroupinfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -79,10 +83,15 @@ public class SysGroupinfoImpl implements SysGroupinfoService {
     }
 
     @Override
-    public Map<String,Object> selectByPrimaryKey(String id) {
+    public Map<String,Object> selectByPrimaryKey(String id,int pageNum,int pageSize) {
         Map<String,Object> map =new HashMap<>();
+        //一级菜单详情
         map.put("sysGroupinfo",this.sysGroupinfoMapper.selectByPrimaryKey(id));
-        map.put("sysPowerinfo",this.sysGroupinfoMapper.selectPowerinfo(id));
+        //子菜单列表
+        PageHelper.startPage(pageNum, pageSize);
+        List<SysPowerinfo> sysPowerinfo = this.sysGroupinfoMapper.selectPowerinfo(id);
+        PageInfo pageInfo = new PageInfo<>(sysPowerinfo,pageSize);
+        map.put("sysPowerinfo",pageInfo);
         return map;
     }
 
