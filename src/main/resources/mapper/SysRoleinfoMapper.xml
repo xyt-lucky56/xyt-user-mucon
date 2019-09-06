@@ -295,11 +295,6 @@
             from sys_powerinfo p
            left join sys_grouplinkpower gp on p.id=gp.powerId
            left join sys_groupinfo g on gp.groupId=g.id
-    <where>
-      <if test=" _parameter != null and _parameter != '' ">
-          INSTR(p.powerName, #{name}) > 0 or INSTR(g.groupName, #{name}) > 0
-      </if>
-    </where>
   </select>
 
   <resultMap id="permissionsMap" type="com.xyt.usermucon.dto.power.SysGroupinfo">

@@ -350,4 +350,60 @@
       inner join sys_powerinfo p on gp.powerId=p.id
       where gp.groupId=#{groupId}
   </select>
+
+  <resultMap id="permissionsMeunMap" type="com.xyt.usermucon.dto.power.SysSystemname">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="systemName" jdbcType="VARCHAR" property="systemname" />
+    <result column="systemContent" jdbcType="VARCHAR" property="systemcontent" />
+    <result column="versionNo" jdbcType="VARCHAR" property="versionno" />
+    <result column="enabledPicName" jdbcType="VARCHAR" property="enabledpicname" />
+    <result column="disabledPicName" jdbcType="VARCHAR" property="disabledpicname" />
+    <result column="picUrl" jdbcType="VARCHAR" property="picurl" />
+    <result column="sortNo" jdbcType="INTEGER" property="sortno" />
+    <result column="initPage" jdbcType="VARCHAR" property="initpage" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <collection property="sysGroupinfo" ofType="com.xyt.usermucon.dto.power.SysGroupinfo">
+      <id column="groupId" jdbcType="VARCHAR" property="groupId" />
+      <result column="groupName" jdbcType="VARCHAR" property="groupname" />
+      <result column="systemName" jdbcType="VARCHAR" property="systemname" />
+      <result column="picPath" jdbcType="VARCHAR" property="picpath" />
+      <result column="picName" jdbcType="VARCHAR" property="picname" />
+      <result column="isExpand" jdbcType="BIT" property="isexpand" />
+      <result column="sortNo" jdbcType="INTEGER" property="sortno" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+    </collection>
+  </resultMap>
+  <!--查询所有权限系统 -->
+  <select id="queryPermissionsMeun" parameterType="java.lang.String"  resultMap="permissionsMeunMap">
+    select s.id ,s.systemName,g.id as groupId,g.groupName
+    from sys_groupinfo g
+    left join sys_systemname s on g.systemName=s.systemName
+    <where>
+      <if test=" _parameter != null and _parameter != '' ">
+        INSTR(s.systemName, #{name}) > 0 or INSTR(g.groupName, #{name}) > 0
+      </if>
+    </where>
+  </select>
+
+  <!--全查询一级菜单-->
+  <select id="selectSysGroupinfo" parameterType="com.xyt.usermucon.dto.power.SysGroupinfo" resultMap="BaseResultMap">
+    select
+      g.id, g.groupName, g.systemName, g.picPath, g.picName, g.isExpand, g.sortNo, g.remark
+    from sys_groupinfo g
+    left join sys_systemname s on g.systemName=s.systemName
+    <where>
+      <if test="systemname != null and systemname != ''">
+          and s.systemName=#{systemname}
+      </if>
+      <if test="searchName != null and searchName != ''">
+        and (
+          INSTR(g.groupName, #{searchName}) > 0 or
+          INSTR(g.systemName, #{searchName}) > 0 or
+          INSTR(g.picPath, #{searchName}) > 0 or
+          INSTR(g.picName, #{searchName}) > 0 or
+          INSTR(g.remark, #{searchName}) > 0
+        )
+      </if>
+    </where>
+  </select>
 </mapper>

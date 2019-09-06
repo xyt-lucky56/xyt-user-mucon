@@ -66,8 +66,13 @@ public class SysPowerImpl implements SysPowerService {
     }
 
     @Override
-    public List<SysPowerinfo> selectByExample(SysPowerinfoExample example) {
-        return this.SysPowerinfoMapper.selectByExample(example);
+    /**
+     * 全查询子菜单
+     * @param sysPowerinfo
+     * @return
+     */
+    public List<SysPowerinfo> selectSysPowerinfo(SysPowerinfo sysPowerinfo){
+        return this.SysPowerinfoMapper.selectSysPowerinfo(sysPowerinfo);
     }
 
     @Override

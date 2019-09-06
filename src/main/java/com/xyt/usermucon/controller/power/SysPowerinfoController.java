@@ -26,16 +26,16 @@ public class SysPowerinfoController {
      * 子菜单-查询子菜单列表
      * @param pageNum
      * @param pageSize
-     * @param example
+     * @param sysPowerinfo
      * @return
      */
     @GetMapping("/queryPowerinfo")
     public PageInfo queryPowerinfo(
             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-            SysPowerinfoExample example) {
+            SysPowerinfo sysPowerinfo) {
         PageHelper.startPage(pageNum, pageSize);
-        List<SysPowerinfo> list=this.sysPowerService.selectByExample(example);
+        List<SysPowerinfo> list=this.sysPowerService.selectSysPowerinfo(sysPowerinfo);
         PageInfo pageInfo = new PageInfo<>(list,pageSize);
         return pageInfo;
     }

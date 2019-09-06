@@ -401,4 +401,29 @@
   <select id="queryPowerCountByName" parameterType="java.lang.String" resultType="java.lang.Integer">
     select count(id) as counts from sys_powerinfo where powerName = #{powerName}
   </select>
+
+  <!--全查询子菜单-->
+  <select id="selectSysPowerinfo" parameterType="com.xyt.usermucon.dto.power.SysPowerinfo" resultMap="BaseResultMap">
+    select
+    p.id, p.powerName, p.powerContent, p.powerType, p.paramStr, p.relativePath, p.fileName, p.picRelativePath,
+    p.picName, p.formType, p.stopSign, p.remark
+    from sys_powerinfo p
+    left join sys_grouplinkpower gp on p.id=gp.powerId
+    left join sys_groupinfo g on g.id=gp.groupId
+    <where>
+      <if test="groupId != null and groupId != ''">
+        and groupId=#{groupId}
+      </if>
+      <if test="groupname != null and groupname != ''">
+        and groupName=#{groupname}
+      </if>
+      <if test="id != null and id != ''">
+        and id=#{id}
+      </if>
+      <if test="powername != null and powername != ''">
+        and powerName=#{powername}
+      </if>
+    </where>
+  </select>
+
 </mapper>

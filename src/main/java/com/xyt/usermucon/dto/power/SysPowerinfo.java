@@ -13,6 +13,7 @@ public class SysPowerinfo {
     private String id;
     private String powerId;
     private String groupId;
+    private String groupname;
 
     /**
      *
@@ -415,5 +416,13 @@ public class SysPowerinfo {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public String getGroupname() {
+        return groupname;
+    }
+
+    public void setGroupname(String groupname) {
+        this.groupname = groupname;
     }
 }

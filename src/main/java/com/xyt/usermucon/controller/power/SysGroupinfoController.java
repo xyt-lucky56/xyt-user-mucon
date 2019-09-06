@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.xyt.usermucon.dto.power.SysGroupinfo;
 import com.xyt.usermucon.dto.power.SysGroupinfoExample;
 import com.xyt.usermucon.dto.power.SysPowerinfo;
+import com.xyt.usermucon.dto.power.SysSystemname;
 import com.xyt.usermucon.server.power.SysGroupinfoService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +31,16 @@ public class SysGroupinfoController {
      * 查询一级菜单列表
      * @param pageNum
      * @param pageSize
-     * @param example
+     * @param sysGroupinfo
      * @return
      */
     @GetMapping("/queryGroupinfo")
     public PageInfo queryGroupinfo(
             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-            SysGroupinfoExample example) {
+            SysGroupinfo sysGroupinfo) {
         PageHelper.startPage(pageNum, pageSize);
-        List<SysGroupinfo> list=this.sysSysGroupinfoService.selectByExample(example);
+        List<SysGroupinfo> list=this.sysSysGroupinfoService.selectSysGroupinfo(sysGroupinfo);
         PageInfo pageInfo = new PageInfo<>(list,pageSize);
         return pageInfo;
     }
@@ -49,9 +50,9 @@ public class SysGroupinfoController {
      * @param name
      * @return
      */
-    @GetMapping("/queryPermissions")
-    public List<SysPowerinfo> queryPermissions(String name) {
-        return this.sysSysGroupinfoService.queryPermissions(name);
+    @GetMapping("/queryPermissionsMeun")
+    public List<SysSystemname> queryPermissionsMeun(String name) {
+        return this.sysSysGroupinfoService.queryPermissionsMeun(name);
     }
 
     /**

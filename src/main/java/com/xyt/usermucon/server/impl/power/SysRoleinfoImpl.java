@@ -88,7 +88,7 @@ public class SysRoleinfoImpl implements SysRoleinfoService {
         //角色-查询角色的权限
         map.put("roleList",this.SysRoleinfoMapper.permissionsToQueryRoles(id));
         //角色-查询所有权限
-        map.put("list",this.SysRoleinfoMapper.queryPermissions(null));
+        map.put("list",this.SysRoleinfoMapper.queryPermissions());
         return map;
     }
 

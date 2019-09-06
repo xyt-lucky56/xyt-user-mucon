@@ -12,6 +12,7 @@ import com.xyt.usermucon.dto.PerDto;
 import com.xyt.usermucon.dto.power.SysGroupinfo;
 import com.xyt.usermucon.dto.power.SysGroupinfoExample;
 import com.xyt.usermucon.dto.power.SysPowerinfo;
+import com.xyt.usermucon.dto.power.SysSystemname;
 import com.xyt.usermucon.server.power.SysGroupinfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -79,8 +80,8 @@ public class SysGroupinfoImpl implements SysGroupinfoService {
     }
 
     @Override
-    public List<SysGroupinfo> selectByExample(SysGroupinfoExample example) {
-        return this.sysGroupinfoMapper.selectByExample(example);
+    public List<SysGroupinfo> selectSysGroupinfo(SysGroupinfo sysGroupinfo) {
+        return this.sysGroupinfoMapper.selectSysGroupinfo(sysGroupinfo);
     }
 
     @Override
@@ -108,8 +109,8 @@ public class SysGroupinfoImpl implements SysGroupinfoService {
         }
     }
     @Override
-    public List<SysPowerinfo> queryPermissions(String name){
-        return this.sysRoleinfoMapper.queryPermissions(name);
+    public List<SysSystemname> queryPermissionsMeun(String name){
+        return this.sysGroupinfoMapper.queryPermissionsMeun(name);
     }
 }
 

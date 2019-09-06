@@ -17,7 +17,12 @@ public interface SysPowerService {
 
     int insertSelective(SysPowerinfo record);
 
-    List<SysPowerinfo> selectByExample(SysPowerinfoExample example);
+    /**
+     * 全查询子菜单
+     * @param sysPowerinfo
+     * @return
+     */
+    List<SysPowerinfo> selectSysPowerinfo(SysPowerinfo sysPowerinfo);
 
     SysPowerinfo selectByPrimaryKey(String id);
 

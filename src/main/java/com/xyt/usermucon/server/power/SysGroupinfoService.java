@@ -3,6 +3,7 @@ package com.xyt.usermucon.server.power;
 import com.xyt.usermucon.dto.power.SysGroupinfo;
 import com.xyt.usermucon.dto.power.SysGroupinfoExample;
 import com.xyt.usermucon.dto.power.SysPowerinfo;
+import com.xyt.usermucon.dto.power.SysSystemname;
 
 import java.util.List;
 import java.util.Map;
@@ -19,12 +20,12 @@ public interface SysGroupinfoService {
 
     int insertSelective(SysGroupinfo record);
 
-    List<SysGroupinfo> selectByExample(SysGroupinfoExample example);
+    List<SysGroupinfo> selectSysGroupinfo(SysGroupinfo sysGroupinfo);
 
     Map<String,Object> selectByPrimaryKey(String id,int pageNum,int pageSize);
 
     int updateByPrimaryKey(SysGroupinfo record);
 
-    List<SysPowerinfo> queryPermissions(String name);
+    List<SysSystemname> queryPermissionsMeun(String name);
 }
 

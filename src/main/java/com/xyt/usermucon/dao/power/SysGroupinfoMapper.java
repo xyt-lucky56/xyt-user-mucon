@@ -5,6 +5,7 @@ import com.xyt.usermucon.dto.power.SysGroupinfoExample;
 import java.util.List;
 
 import com.xyt.usermucon.dto.power.SysPowerinfo;
+import com.xyt.usermucon.dto.power.SysSystemname;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -119,4 +120,17 @@ public interface SysGroupinfoMapper {
      */
     List<SysPowerinfo> selectPowerinfo(String groupId);
 
+    /**
+     *
+     * @param name
+     * @return
+     */
+    List<SysSystemname> queryPermissionsMeun(String name);
+
+    /**
+     * 全查询一级菜单
+     * @param sysGroupinfo
+     * @return
+     */
+    List<SysGroupinfo> selectSysGroupinfo(SysGroupinfo sysGroupinfo);
 }

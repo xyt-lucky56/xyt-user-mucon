@@ -103,4 +103,10 @@ public interface SysPowerinfoMapper {
      * @return
      */
     Integer queryPowerCountByName(String powerName);
+    /**
+     * 全查询子菜单
+     * @param sysPowerinfo
+     * @return
+     */
+    List<SysPowerinfo> selectSysPowerinfo(SysPowerinfo sysPowerinfo);
 }

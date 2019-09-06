@@ -77,6 +77,7 @@ public class SysGroupinfo {
     private String remark;
 
     private List<SysPowerinfo> sysPowerinfo;
+    private String searchName;
 
     public List<SysPowerinfo> getSysPowerinfo() {
         return sysPowerinfo;
@@ -284,5 +285,13 @@ public class SysGroupinfo {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public String getSearchName() {
+        return searchName;
+    }
+
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
     }
 }
