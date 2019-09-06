@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xyt.usermucon.dto.power.SysGroupinfo;
 import com.xyt.usermucon.dto.power.SysGroupinfoExample;
+import com.xyt.usermucon.dto.power.SysPowerinfo;
 import com.xyt.usermucon.server.power.SysGroupinfoService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,16 @@ public class SysGroupinfoController {
         List<SysGroupinfo> list=this.sysSysGroupinfoService.selectByExample(example);
         PageInfo pageInfo = new PageInfo<>(list,pageSize);
         return pageInfo;
+    }
+
+    /**
+     * 查询所有权限菜单
+     * @param name
+     * @return
+     */
+    @GetMapping("/queryPermissions")
+    public List<SysPowerinfo> queryPermissions(String name) {
+        return this.sysSysGroupinfoService.queryPermissions(name);
     }
 
     /**

@@ -7,6 +7,7 @@ import com.xyt.usermucon.common.ToolUtils;
 import com.xyt.usermucon.dao.power.SysGroupinfoMapper;
 import com.xyt.usermucon.dao.power.SysGrouplinkpowerMapper;
 import com.xyt.usermucon.dao.power.SysPowerinfoMapper;
+import com.xyt.usermucon.dao.power.SysRoleinfoMapper;
 import com.xyt.usermucon.dto.PerDto;
 import com.xyt.usermucon.dto.power.SysGroupinfo;
 import com.xyt.usermucon.dto.power.SysGroupinfoExample;
@@ -36,7 +37,7 @@ public class SysGroupinfoImpl implements SysGroupinfoService {
     @Autowired
     private SysGrouplinkpowerMapper sysGrouplinkpowerMapper;
     @Autowired
-    private SysPowerinfoMapper sysPowerinfoMapper;
+    private SysRoleinfoMapper sysRoleinfoMapper;
 
 
     @Value("${exception.port}")
@@ -106,7 +107,9 @@ public class SysGroupinfoImpl implements SysGroupinfoService {
             return this.sysGroupinfoMapper.updateByPrimaryKey(record);
         }
     }
-
-
+    @Override
+    public List<SysPowerinfo> queryPermissions(String name){
+        return this.sysRoleinfoMapper.queryPermissions(name);
+    }
 }
 
