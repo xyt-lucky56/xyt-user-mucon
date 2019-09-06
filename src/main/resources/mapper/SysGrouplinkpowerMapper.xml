@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xyt.usermucon.dao.power.SysGrouplinkpowerMapper">
+
+  <!--添加子菜单-->
+  <insert id="addGrouplinkpower" parameterType="com.xyt.usermucon.dto.power.SysGrouplinkpower">
+    insert into
+    sys_grouplinkpower
+    (id,groupId,powerId )
+    values
+     (
+      #{id},
+      #{groupId},
+      #{powerId}
+      )
+  </insert>
+
+  <!--删除子菜单和一级菜单关联的数据-->
+  <delete id="deleteGrouplinkpower">
+    delete from sys_grouplinkpower where groupId=#{groupId}
+  </delete>
+
+    <!--删除该一级菜单下所有的权限-->
+    <delete id="deleteGroupPower">
+        delete from sys_powerinfo where id in ( select gp.powerId from sys_grouplinkpower gp where gp.groupId=#{id})
+    </delete>
+</mapper>

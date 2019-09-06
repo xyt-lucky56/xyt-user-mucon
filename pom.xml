@@ -98,6 +98,15 @@
             <version>1.3.2</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.xyt</groupId>
+            <artifactId>ToolJar</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/ToolJar.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
