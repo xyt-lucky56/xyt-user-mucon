@@ -14,7 +14,7 @@ public class ResultException {
         Map<String,Object> map=new HashMap<>();
         BizException be = (BizException) e;
         map.put("code", be.getCode());
-        map.put("msg",be.getMsg());
+        map.put("msg",be.getMessage());
         return map;
     }
 }
