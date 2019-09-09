@@ -5,11 +5,14 @@ import com.github.pagehelper.PageInfo;
 import com.xyt.usermucon.dto.power.SysRoleinfo;
 import com.xyt.usermucon.dto.power.SysRoleinfoExample;
 import com.xyt.usermucon.server.power.SysRoleinfoService;
+import lh.model.ResultVO;
 import lh.model.ResultVOPage;
 import lh.units.ResultStruct;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -30,16 +33,14 @@ public class SysRoleinfoController {
      * 角色-查询角色列表
      * @param page
      * @param limit
-     * @param example
      * @return
      */
     @PostMapping("/queryRoleInfo")
     public ResultVOPage queryRoleInfo(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "limit", defaultValue = "10") int limit,
-            SysRoleinfoExample example) {
+            @RequestParam(value = "limit", defaultValue = "10") int limit) {
         PageHelper.startPage(page, limit);
-        List<SysRoleinfo> list=this.SysRoleinfoService.selectByExample(example);
+        List<SysRoleinfo> list=this.SysRoleinfoService.selectByExample(null);
         PageInfo pageInfo = new PageInfo<>(list,limit);
         return ResultStruct.successPage(list, pageInfo.getPageNum()
                 , pageInfo.getPageSize(), pageInfo.getTotal());
@@ -47,34 +48,45 @@ public class SysRoleinfoController {
 
     /**
      * 新增角色信息
-     * @param record
+     * @param map
      * @return
      */
     @PostMapping("/addingRoleInfo")
-    public int addingSubsystems(@RequestBody  SysRoleinfo record){
+    public ResultVO addingSubsystems(@RequestBody Map<String,Object> map){
+        return ResultStruct.success(this.SysRoleinfoService.insertSelective(this.getSysRoleinfo(map)));
+    }
 
-        return this.SysRoleinfoService.insertSelective(record);
+    private SysRoleinfo getSysRoleinfo(Map<String,Object> map){
+        SysRoleinfo sysRoleinfo=new SysRoleinfo();
+        try {
+            BeanUtils.copyProperties(sysRoleinfo,map);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return sysRoleinfo;
     }
 
     /**
-     *  查询角色详情
+     * 查询角色详情
      * @param id
      * @return
      */
     @PostMapping("/queryRoleInfoById")
-    public SysRoleinfo queryRoleInfoById(String id){
-        return this.SysRoleinfoService.selectByPrimaryKey(id);
+    public ResultVO queryRoleInfoById(@RequestParam(value = "id")String id){
+        return ResultStruct.success(this.SysRoleinfoService.selectByPrimaryKey(id));
     }
 
     /**
-     *  编辑角色信息
-     * @param record
+     * 编辑角色信息
+     * @param map
      * @return
      */
     @PostMapping("/editRoleInfo")
-    public int editRoleInfo(@RequestBody SysRoleinfo record){
+    public ResultVO editRoleInfo(@RequestBody Map<String,Object> map){
 
-        return this.SysRoleinfoService.updateByPrimaryKey(record);
+        return ResultStruct.success(this.SysRoleinfoService.updateByPrimaryKey(this.getSysRoleinfo(map)));
     }
 
     /**
@@ -83,8 +95,8 @@ public class SysRoleinfoController {
      * @return
      */
     @PostMapping("/deleteRoleInfoById")
-    public int deleteSubsystems(String id){
-        return this.SysRoleinfoService.deleteByPrimaryKey(id);
+    public ResultVO deleteSubsystems(@RequestParam(value = "id")String id){
+        return ResultStruct.success(this.SysRoleinfoService.deleteByPrimaryKey(id));
     }
 
     /**
@@ -92,8 +104,8 @@ public class SysRoleinfoController {
      * @return
      */
     @PostMapping("/permissionsToQueryRoles")
-    public Map<String,Object> permissionsToQueryRoles(String id){
-        return this.SysRoleinfoService.permissionsToQueryRoles(id);
+    public ResultVO permissionsToQueryRoles(@RequestParam(value = "id")String id){
+        return ResultStruct.success(this.SysRoleinfoService.permissionsToQueryRoles(id));
     }
 
     /**
@@ -102,8 +114,8 @@ public class SysRoleinfoController {
      * @return
      */
     @PostMapping("/allocationOfPermissions")
-    public Map<String,Object> allocationOfPermissions(@RequestBody Map<String,Object> map){
-        return this.SysRoleinfoService.allocationOfPermissions((String)map.get("roleId"),(List<String>)map.get("powerIds"));
+    public ResultVO allocationOfPermissions(@RequestBody Map<String,Object> map){
+        return ResultStruct.success(this.SysRoleinfoService.allocationOfPermissions((String)map.get("roleId"),(List<String>)map.get("powerIds")));
     }
 
 

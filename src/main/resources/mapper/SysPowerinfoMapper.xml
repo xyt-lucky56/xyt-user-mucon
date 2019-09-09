@@ -403,7 +403,7 @@
   </select>
 
   <!--全查询子菜单-->
-  <select id="selectSysPowerinfo" parameterType="com.xyt.usermucon.dto.power.SysPowerinfo" resultMap="BaseResultMap">
+  <select id="selectSysPowerinfo" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     p.id, p.powerName, p.powerContent, p.powerType, p.paramStr, p.relativePath, p.fileName, p.picRelativePath,
     p.picName, p.formType, p.stopSign, p.remark
@@ -416,13 +416,13 @@
       </if>
       <if test="groupname != null and groupname != ''">
         and groupName=#{groupname}
-      </if>
+      </if><!--
       <if test="id != null and id != ''">
         and id=#{id}
       </if>
       <if test="powername != null and powername != ''">
         and powerName=#{powername}
-      </if>
+      </if>-->
       <if test="searchName != null and searchName != ''">
         and (
         INSTR(p.powerName, #{searchName}) > 0 or

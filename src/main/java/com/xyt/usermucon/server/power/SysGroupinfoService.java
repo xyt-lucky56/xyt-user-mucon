@@ -20,14 +20,21 @@ public interface SysGroupinfoService {
 
     int insertSelective(SysGroupinfo record);
 
-    List<SysGroupinfo> selectSysGroupinfo(SysGroupinfo sysGroupinfo);
+    List<SysGroupinfo> selectSysGroupinfo(String systemname,String searchName);
 
     List<SysGroupinfo> selectSysGroupInfoTest();
 
-    Map<String,Object> selectByPrimaryKey(String id,int pageNum,int pageSize);
+    SysGroupinfo selectByPrimaryKey(String id);
 
     int updateByPrimaryKey(SysGroupinfo record);
 
     List<SysSystemname> queryPermissionsMeun(String name);
+
+    /**
+     * 查询该一级菜单下的权限
+     * @param groupId
+     * @return
+     */
+    List<SysPowerinfo> selectPowerinfo(String groupId);
 }
 

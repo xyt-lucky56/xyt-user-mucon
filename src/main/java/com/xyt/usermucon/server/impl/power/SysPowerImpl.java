@@ -8,6 +8,7 @@ import com.xyt.usermucon.dto.power.SysGrouplinkpower;
 import com.xyt.usermucon.dto.power.SysPowerinfo;
 import com.xyt.usermucon.dto.power.SysPowerinfoExample;
 import com.xyt.usermucon.server.power.SysPowerService;
+import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -42,9 +43,10 @@ public class SysPowerImpl implements SysPowerService {
     @Override
     @Transactional
     public int insertSelective(SysPowerinfo record) {
-        Integer counts=this.SysPowerinfoMapper.queryPowerCountByName(record.getPowername());
-        if(null!=counts && counts>0){
-            throw new BizException("20001","子菜单名称重复！");
+        Integer counts = this.SysPowerinfoMapper.queryPowerCountByName(record.getPowername());
+        if (null != counts && counts > 0) {
+            throw new BizException("20001", "子菜单名称重复！");
+
         }
         try {
             record.setId(ToolUtils.getPowerKey(port));
@@ -52,7 +54,7 @@ public class SysPowerImpl implements SysPowerService {
             e.printStackTrace();
         }
         //准备一级菜单与子菜单关联数据
-        SysGrouplinkpower sysGrouplinkpower=new SysGrouplinkpower();
+        SysGrouplinkpower sysGrouplinkpower = new SysGrouplinkpower();
         try {
             sysGrouplinkpower.setId(ToolUtils.getPowerKey(port));
         } catch (Exception e) {
@@ -71,8 +73,8 @@ public class SysPowerImpl implements SysPowerService {
      * @param sysPowerinfo
      * @return
      */
-    public List<SysPowerinfo> selectSysPowerinfo(SysPowerinfo sysPowerinfo){
-        return this.SysPowerinfoMapper.selectSysPowerinfo(sysPowerinfo);
+    public List<SysPowerinfo> selectSysPowerinfo(String groupId,String groupname,String searchName) {
+        return this.SysPowerinfoMapper.selectSysPowerinfo(groupId,groupname,searchName);
     }
 
     @Override
@@ -83,10 +85,10 @@ public class SysPowerImpl implements SysPowerService {
     @Override
     @Transactional
     public int updateByPrimaryKey(SysPowerinfo record) {
-        SysPowerinfo sysPowerinfo=this.SysPowerinfoMapper.selectByPrimaryKey(record.getId());
-        Integer counts=this.SysPowerinfoMapper.queryPowerCountByName(record.getPowername());
-        if(null!=counts && counts>0 && null!=sysPowerinfo.getPowername() && !sysPowerinfo.getPowername().equals(record.getPowername())){
-            throw new BizException("20001","子菜单名称重复！");
+        SysPowerinfo sysPowerinfo = this.SysPowerinfoMapper.selectByPrimaryKey(record.getId());
+        Integer counts = this.SysPowerinfoMapper.queryPowerCountByName(record.getPowername());
+        if (null != counts && counts > 0 && null != sysPowerinfo.getPowername() && !sysPowerinfo.getPowername().equals(record.getPowername())) {
+            throw new BizException("20001", "子菜单名称重复！");
         }
         return this.SysPowerinfoMapper.updateByPrimaryKey(record);
     }

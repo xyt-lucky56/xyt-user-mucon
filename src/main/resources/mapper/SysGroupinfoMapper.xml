@@ -404,7 +404,7 @@
     </select>
 
     <!--全查询一级菜单-->
-    <select id="selectSysGroupinfo" parameterType="com.xyt.usermucon.dto.power.SysGroupinfo" resultMap="BaseResultMap">
+    <select id="selectSysGroupinfo" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         g.id, g.groupName, g.systemName, g.picPath, g.picName, g.isExpand, g.sortNo, g.remark
         from sys_groupinfo g

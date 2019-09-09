@@ -19,10 +19,12 @@ public interface SysPowerService {
 
     /**
      * 全查询子菜单
-     * @param sysPowerinfo
+     * @param groupId
+     * @param groupname
+     * @param searchName
      * @return
      */
-    List<SysPowerinfo> selectSysPowerinfo(SysPowerinfo sysPowerinfo);
+    List<SysPowerinfo> selectSysPowerinfo(String groupId,String groupname,String searchName);
 
     SysPowerinfo selectByPrimaryKey(String id);
 

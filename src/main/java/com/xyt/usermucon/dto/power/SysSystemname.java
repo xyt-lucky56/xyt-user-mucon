@@ -341,4 +341,21 @@ public class SysSystemname {
     public void setSysGroupinfo(List<SysGroupinfo> sysGroupinfo) {
         this.sysGroupinfo = sysGroupinfo;
     }
+
+    @Override
+    public String toString() {
+        return "SysSystemname{" +
+                "id='" + id + '\'' +
+                ", systemname='" + systemname + '\'' +
+                ", systemcontent='" + systemcontent + '\'' +
+                ", versionno='" + versionno + '\'' +
+                ", enabledpicname='" + enabledpicname + '\'' +
+                ", disabledpicname='" + disabledpicname + '\'' +
+                ", picurl='" + picurl + '\'' +
+                ", sortno=" + sortno +
+                ", initpage='" + initpage + '\'' +
+                ", remark='" + remark + '\'' +
+                ", sysGroupinfo=" + sysGroupinfo +
+                '}';
+    }
 }

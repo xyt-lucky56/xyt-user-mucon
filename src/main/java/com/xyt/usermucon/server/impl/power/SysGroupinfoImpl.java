@@ -37,8 +37,6 @@ public class SysGroupinfoImpl implements SysGroupinfoService {
     private SysGroupinfoMapper sysGroupinfoMapper;
     @Autowired
     private SysGrouplinkpowerMapper sysGrouplinkpowerMapper;
-    @Autowired
-    private SysRoleinfoMapper sysRoleinfoMapper;
 
 
     @Value("${exception.port}")
@@ -80,8 +78,8 @@ public class SysGroupinfoImpl implements SysGroupinfoService {
     }
 
     @Override
-    public List<SysGroupinfo> selectSysGroupinfo(SysGroupinfo sysGroupinfo) {
-        return this.sysGroupinfoMapper.selectSysGroupinfo(sysGroupinfo);
+    public List<SysGroupinfo> selectSysGroupinfo(String systemname,String searchName) {
+        return this.sysGroupinfoMapper.selectSysGroupinfo(systemname,searchName);
     }
 
     @Override
@@ -90,17 +88,19 @@ public class SysGroupinfoImpl implements SysGroupinfoService {
     }
 
     @Override
-    public Map<String,Object> selectByPrimaryKey(String id,int pageNum,int pageSize) {
-        Map<String,Object> map =new HashMap<>();
-        //一级菜单详情
-        map.put("sysGroupinfo",this.sysGroupinfoMapper.selectByPrimaryKey(id));
-        //子菜单列表
-        PageHelper.startPage(pageNum, pageSize);
-        List<SysPowerinfo> sysPowerinfo = this.sysGroupinfoMapper.selectPowerinfo(id);
-        PageInfo pageInfo = new PageInfo<>(sysPowerinfo,pageSize);
-        map.put("sysPowerinfo",pageInfo);
-        return map;
+    public SysGroupinfo selectByPrimaryKey(String id) {
+        return this.sysGroupinfoMapper.selectByPrimaryKey(id);
     }
+
+    /**
+     * 查询该一级菜单下的权限
+     * @param groupId
+     * @return
+     */
+    public List<SysPowerinfo> selectPowerinfo(String groupId){
+        return this.sysGroupinfoMapper.selectPowerinfo(groupId);
+    }
+
 
     @Override
     @Transactional

@@ -129,10 +129,11 @@ public interface SysGroupinfoMapper {
 
     /**
      * 全查询一级菜单
-     * @param sysGroupinfo
+     * @param systemname
+     * @param searchName
      * @return
      */
-    List<SysGroupinfo> selectSysGroupinfo(SysGroupinfo sysGroupinfo);
+    List<SysGroupinfo> selectSysGroupinfo(@Param("systemname")String systemname,@Param("searchName")String searchName);
 
     List<SysGroupinfo> selectSysGroupInfoTest();
 }

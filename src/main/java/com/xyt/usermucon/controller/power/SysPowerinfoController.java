@@ -4,12 +4,16 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xyt.usermucon.dto.power.SysPowerinfo;
 import com.xyt.usermucon.server.power.SysPowerService;
+import lh.model.ResultVO;
 import lh.model.ResultVOPage;
 import lh.units.ResultStruct;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author :刘梦丽
@@ -27,16 +31,21 @@ public class SysPowerinfoController {
      * 子菜单-查询子菜单列表
      * @param page
      * @param limit
-     * @param sysPowerinfo
+     * @param groupId
+     * @param groupname
+     * @param searchName
      * @return
      */
     @PostMapping("/queryPowerinfo")
     public ResultVOPage queryPowerinfo(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "limit", defaultValue = "10") int limit,
-            SysPowerinfo sysPowerinfo) {
+            @RequestParam(value = "groupId",required = false)String groupId,
+            @RequestParam(value = "groupname",required = false)String groupname,
+            @RequestParam(value = "searchName",required = false)String searchName) {
         PageHelper.startPage(page, limit);
-        List<SysPowerinfo> list=this.sysPowerService.selectSysPowerinfo(sysPowerinfo);
+        List<SysPowerinfo> sysPowerinfos = this.sysPowerService.selectSysPowerinfo(groupId, groupname, searchName);
+        List<SysPowerinfo> list= sysPowerinfos;
         PageInfo pageInfo = new PageInfo<>(list,limit);
         return ResultStruct.successPage(list, pageInfo.getPageNum()
                 , pageInfo.getPageSize(), pageInfo.getTotal());
@@ -44,13 +53,24 @@ public class SysPowerinfoController {
 
     /**
      * 新增子菜单信息
-     * @param record
+     * @param map
      * @return
      */
     @PostMapping("/addPowerinfo")
-    public int addPowerinfo(@RequestBody SysPowerinfo record){
+    public ResultVO addPowerinfo(@RequestBody Map<String,Object> map){
+      return ResultStruct.success(this.sysPowerService.insertSelective(this.getSysPowerinfo(map)));
+    }
 
-        return this.sysPowerService.insertSelective(record);
+    public SysPowerinfo getSysPowerinfo(Map<String,Object> map){
+        SysPowerinfo sysSystemname=new SysPowerinfo();
+        try {
+            BeanUtils.copyProperties(sysSystemname,map);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return sysSystemname;
     }
 
     /**
@@ -59,18 +79,18 @@ public class SysPowerinfoController {
      * @return
      */
     @PostMapping("/queryPowerinfoById")
-    public SysPowerinfo queryPowerinfoById(String id){
-        return this.sysPowerService.selectByPrimaryKey(id);
+    public ResultVO queryPowerinfoById(@RequestParam(value = "id")String id){
+        return ResultStruct.success(this.sysPowerService.selectByPrimaryKey(id));
     }
 
     /**
      * 编辑子菜单信息
-     * @param record
+     * @param map
      * @return
      */
     @PostMapping("/editPowerinfos")
-    public int editPowerinfos(@RequestBody SysPowerinfo record){
-        return this.sysPowerService.updateByPrimaryKey(record);
+    public ResultVO editPowerinfos(@RequestBody Map<String,Object> map){
+        return ResultStruct.success(this.sysPowerService.updateByPrimaryKey(this.getSysPowerinfo(map)));
     }
 
     /**
@@ -79,8 +99,8 @@ public class SysPowerinfoController {
      * @return
      */
     @PostMapping("/deletePowerinfos")
-    public int deletePowerinfos(String id){
-        return this.sysPowerService.deleteByPrimaryKey(id);
+    public ResultVO deletePowerinfos(@RequestParam(value = "id")String id){
+        return ResultStruct.success(this.sysPowerService.deleteByPrimaryKey(id));
     }
 }
 

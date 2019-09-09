@@ -15,6 +15,8 @@ public class ResultException {
         BizException be = (BizException) e;
         map.put("code", be.getCode());
         map.put("msg",be.getMessage());
+        map.put("data",null);
+        map.put("count",0);
         return map;
     }
 }
