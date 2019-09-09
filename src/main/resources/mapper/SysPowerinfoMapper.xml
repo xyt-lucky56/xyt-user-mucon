@@ -423,6 +423,18 @@
       <if test="powername != null and powername != ''">
         and powerName=#{powername}
       </if>
+      <if test="searchName != null and searchName != ''">
+        and (
+        INSTR(p.powerName, #{searchName}) > 0 or
+        INSTR(p.powerContent, #{searchName}) > 0 or
+        INSTR(p.powerType, #{searchName}) > 0 or
+        INSTR(p.paramStr, #{searchName}) > 0 or
+        INSTR(p.relativePath, #{searchName}) > 0 or
+        INSTR(p.fileName, #{searchName}) > 0 or
+        INSTR(p.picRelativePath, #{searchName}) > 0 or
+        INSTR(p.formType, #{searchName}) > 0
+        )
+      </if>
     </where>
   </select>
 
