@@ -22,6 +22,8 @@ public interface SysGroupinfoService {
 
     List<SysGroupinfo> selectSysGroupinfo(SysGroupinfo sysGroupinfo);
 
+    List<SysGroupinfo> selectSysGroupInfoTest();
+
     Map<String,Object> selectByPrimaryKey(String id,int pageNum,int pageSize);
 
     int updateByPrimaryKey(SysGroupinfo record);

@@ -3,8 +3,9 @@ package com.xyt.usermucon.controller.power;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xyt.usermucon.dto.power.SysPowerinfo;
-import com.xyt.usermucon.dto.power.SysPowerinfoExample;
 import com.xyt.usermucon.server.power.SysPowerService;
+import lh.model.ResultVOPage;
+import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,20 +25,21 @@ public class SysPowerinfoController {
 
     /**
      * 子菜单-查询子菜单列表
-     * @param pageNum
-     * @param pageSize
+     * @param page
+     * @param limit
      * @param sysPowerinfo
      * @return
      */
-    @GetMapping("/queryPowerinfo")
-    public PageInfo queryPowerinfo(
-            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+    @PostMapping("/queryPowerinfo")
+    public ResultVOPage queryPowerinfo(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "limit", defaultValue = "10") int limit,
             SysPowerinfo sysPowerinfo) {
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(page, limit);
         List<SysPowerinfo> list=this.sysPowerService.selectSysPowerinfo(sysPowerinfo);
-        PageInfo pageInfo = new PageInfo<>(list,pageSize);
-        return pageInfo;
+        PageInfo pageInfo = new PageInfo<>(list,limit);
+        return ResultStruct.successPage(list, pageInfo.getPageNum()
+                , pageInfo.getPageSize(), pageInfo.getTotal());
     }
 
     /**
@@ -56,7 +58,7 @@ public class SysPowerinfoController {
      * @param id
      * @return
      */
-    @GetMapping("/queryPowerinfoById")
+    @PostMapping("/queryPowerinfoById")
     public SysPowerinfo queryPowerinfoById(String id){
         return this.sysPowerService.selectByPrimaryKey(id);
     }

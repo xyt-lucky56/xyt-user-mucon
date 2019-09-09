@@ -8,6 +8,8 @@ import com.xyt.usermucon.dto.power.SysPowerinfo;
 import com.xyt.usermucon.dto.power.SysSystemname;
 import com.xyt.usermucon.server.power.SysGroupinfoService;
 import io.swagger.annotations.Api;
+import lh.model.ResultVOPage;
+import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,72 +31,97 @@ public class SysGroupinfoController {
 
     /**
      * 查询一级菜单列表
-     * @param pageNum
-     * @param pageSize
+     *
+     * @param page
+     * @param limit
      * @param sysGroupinfo
      * @return
      */
-    @GetMapping("/queryGroupinfo")
-    public PageInfo queryGroupinfo(
-            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+    @PostMapping("/queryGroupinfo")
+    public ResultVOPage queryGroupinfo(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "limit", defaultValue = "10") int limit,
             SysGroupinfo sysGroupinfo) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<SysGroupinfo> list=this.sysSysGroupinfoService.selectSysGroupinfo(sysGroupinfo);
-        PageInfo pageInfo = new PageInfo<>(list,pageSize);
-        return pageInfo;
+        PageHelper.startPage(page, limit);
+        List<SysGroupinfo> list = this.sysSysGroupinfoService.selectSysGroupinfo(sysGroupinfo);
+        PageInfo pageInfo = new PageInfo<>(list, limit);
+        return ResultStruct.successPage(list, pageInfo.getPageNum()
+                , pageInfo.getPageSize(), pageInfo.getTotal());
+    }
+
+    /**
+     * 查询一级菜单列表
+     *
+     * @param page
+     * @param limit
+     * @return
+     */
+    @PostMapping("/queryGroupInfoTest")
+    public ResultVOPage queryGroupInfoTest(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "limit", defaultValue = "10") int limit) {
+        PageHelper.startPage(page, limit);
+        List<SysGroupinfo> list = this.sysSysGroupinfoService.selectSysGroupInfoTest();
+        PageInfo pageInfo = new PageInfo<>(list, limit);
+        return ResultStruct.successPage(list, pageInfo.getPageNum()
+                , pageInfo.getPageSize(), pageInfo.getTotal());
     }
 
     /**
      * 查询所有权限菜单
+     *
      * @param name
      * @return
      */
-    @GetMapping("/queryPermissionsMeun")
+    @PostMapping("/queryPermissionsMeun")
     public List<SysSystemname> queryPermissionsMeun(String name) {
         return this.sysSysGroupinfoService.queryPermissionsMeun(name);
     }
 
     /**
      * 新增一级菜单信息
+     *
      * @param record
      * @return
      */
     @PostMapping("/addGroupinfos")
-    public int addGroupinfos(@RequestBody SysGroupinfo record){
+    public int addGroupinfos(@RequestBody SysGroupinfo record) {
         return this.sysSysGroupinfoService.insertSelective(record);
     }
 
     /**
-     *  查询一级菜单详情
+     * 查询一级菜单详情
+     *
      * @param id
      * @return
      */
-    @GetMapping("/queryGroupinfoById")
-    public Map<String,Object> queryGroupinfoById(String id,@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                                 @RequestParam(value = "pageSize", defaultValue = "10") int pageSize){
-        return this.sysSysGroupinfoService.selectByPrimaryKey(id,pageNum,pageSize);
+    @PostMapping("/queryGroupinfoById")
+    public Map<String, Object> queryGroupinfoById(String id, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                                  @RequestParam(value = "limit", defaultValue = "10") int limit) {
+        return this.sysSysGroupinfoService.selectByPrimaryKey(id, pageNum, limit);
     }
 
     /**
      * 编辑一级菜单信息
+     *
      * @param record
      * @return
      */
     @PostMapping("/editGroupinfo")
-    public int editGroupinfo(@RequestBody SysGroupinfo record){
+    public int editGroupinfo(@RequestBody SysGroupinfo record) {
         return this.sysSysGroupinfoService.updateByPrimaryKey(record);
     }
 
     /**
      * 删除一级菜单信息
+     *
      * @param id
-     * @param count  点击次数
+     * @param count 点击次数
      * @return
      */
     @PostMapping("/deleteGroupinfo")
-    public int deleteGroupinfo(String id,int count){
-        return this.sysSysGroupinfoService.deleteByPrimaryKey(id,count);
+    public int deleteGroupinfo(String id, int count) {
+        return this.sysSysGroupinfoService.deleteByPrimaryKey(id, count);
     }
 }
 

@@ -6,6 +6,8 @@ import com.xyt.usermucon.dto.power.SysSystemname;
 import com.xyt.usermucon.dto.power.SysSystemnameExample;
 import com.xyt.usermucon.server.power.SysSystemnameService;
 import io.swagger.annotations.Api;
+import lh.model.ResultVOPage;
+import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,20 +28,21 @@ public class SysSystemnameController {
 
     /**
      * 系统-查询系统列表
-     * @param pageNum
-     * @param pageSize
+     * @param page
+     * @param limit
      * @param example
      * @return
      */
-    @GetMapping("/querySystemInfo")
-    public PageInfo querySystemInfo(
-            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+    @PostMapping("/querySystemInfo")
+    public ResultVOPage querySystemInfo(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "limit", defaultValue = "10") int limit,
             SysSystemnameExample example) {
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(page, limit);
         List<SysSystemname> list=this.sysSystemnameService.selectByExample(example);
-        PageInfo pageInfo = new PageInfo<>(list,pageSize);
-        return pageInfo;
+        PageInfo pageInfo = new PageInfo<>(list,limit);
+        return ResultStruct.successPage(list, pageInfo.getPageNum()
+                , pageInfo.getPageSize(), pageInfo.getTotal());
     }
 
     /**
@@ -58,7 +61,7 @@ public class SysSystemnameController {
      * @param id
      * @return
      */
-    @GetMapping("/querySystemInfoById")
+    @PostMapping("/querySystemInfoById")
     public SysSystemname querySystemInfoById(String id){
         return this.sysSystemnameService.selectByPrimaryKey(id);
     }

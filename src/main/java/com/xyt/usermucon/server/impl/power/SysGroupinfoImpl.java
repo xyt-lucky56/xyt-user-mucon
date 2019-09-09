@@ -85,6 +85,11 @@ public class SysGroupinfoImpl implements SysGroupinfoService {
     }
 
     @Override
+    public List<SysGroupinfo> selectSysGroupInfoTest() {
+        return this.sysGroupinfoMapper.selectSysGroupInfoTest();
+    }
+
+    @Override
     public Map<String,Object> selectByPrimaryKey(String id,int pageNum,int pageSize) {
         Map<String,Object> map =new HashMap<>();
         //一级菜单详情

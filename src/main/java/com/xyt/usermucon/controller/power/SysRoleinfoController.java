@@ -5,6 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.xyt.usermucon.dto.power.SysRoleinfo;
 import com.xyt.usermucon.dto.power.SysRoleinfoExample;
 import com.xyt.usermucon.server.power.SysRoleinfoService;
+import lh.model.ResultVOPage;
+import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,20 +28,21 @@ public class SysRoleinfoController {
 
     /**
      * 角色-查询角色列表
-     * @param pageNum
-     * @param pageSize
+     * @param page
+     * @param limit
      * @param example
      * @return
      */
-    @GetMapping("/queryRoleInfo")
-    public PageInfo queryRoleInfo(
-            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+    @PostMapping("/queryRoleInfo")
+    public ResultVOPage queryRoleInfo(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "limit", defaultValue = "10") int limit,
             SysRoleinfoExample example) {
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(page, limit);
         List<SysRoleinfo> list=this.SysRoleinfoService.selectByExample(example);
-        PageInfo pageInfo = new PageInfo<>(list,pageSize);
-        return pageInfo;
+        PageInfo pageInfo = new PageInfo<>(list,limit);
+        return ResultStruct.successPage(list, pageInfo.getPageNum()
+                , pageInfo.getPageSize(), pageInfo.getTotal());
     }
 
     /**
@@ -58,7 +61,7 @@ public class SysRoleinfoController {
      * @param id
      * @return
      */
-    @GetMapping("/queryRoleInfoById")
+    @PostMapping("/queryRoleInfoById")
     public SysRoleinfo queryRoleInfoById(String id){
         return this.SysRoleinfoService.selectByPrimaryKey(id);
     }
@@ -88,7 +91,7 @@ public class SysRoleinfoController {
      *  角色-查询角色的权限
      * @return
      */
-    @GetMapping("/permissionsToQueryRoles")
+    @PostMapping("/permissionsToQueryRoles")
     public Map<String,Object> permissionsToQueryRoles(String id){
         return this.SysRoleinfoService.permissionsToQueryRoles(id);
     }

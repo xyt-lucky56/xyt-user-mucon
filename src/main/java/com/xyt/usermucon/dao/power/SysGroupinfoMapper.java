@@ -133,4 +133,6 @@ public interface SysGroupinfoMapper {
      * @return
      */
     List<SysGroupinfo> selectSysGroupinfo(SysGroupinfo sysGroupinfo);
+
+    List<SysGroupinfo> selectSysGroupInfoTest();
 }
