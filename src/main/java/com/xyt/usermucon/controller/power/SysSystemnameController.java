@@ -82,7 +82,7 @@ public class SysSystemnameController {
      * @return
      */
     @PostMapping("/querySystemInfoById")
-    public ResultVO querySystemInfoById(String id){
+    public ResultVO querySystemInfoById(@RequestParam(value="id",required = true) String id){
         return ResultStruct.success(this.sysSystemnameService.selectByPrimaryKey(id));
     }
 
