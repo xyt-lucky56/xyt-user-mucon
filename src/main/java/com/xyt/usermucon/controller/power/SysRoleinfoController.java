@@ -5,6 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.xyt.usermucon.dto.power.SysRoleinfo;
 import com.xyt.usermucon.dto.power.SysRoleinfoExample;
 import com.xyt.usermucon.server.power.SysRoleinfoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lh.model.ResultVO;
 import lh.model.ResultVOPage;
 import lh.units.ResultStruct;
@@ -24,6 +28,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/system")
+@Api(value = "角色粒子层", description = "所有角色相关请求")
 public class SysRoleinfoController {
     @Autowired
     SysRoleinfoService SysRoleinfoService;//角色
@@ -35,6 +40,11 @@ public class SysRoleinfoController {
      * @param limit
      * @return
      */
+    @ApiOperation(value = "角色-查询角色列表", notes = "方法说明")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "当前页数，默认1条", dataType = "int"),
+            @ApiImplicitParam(name = "limit", value = "每页条数，默认10条", dataType = "int")
+    })
     @PostMapping("/queryRoleInfo")
     public ResultVOPage queryRoleInfo(
             @RequestParam(value = "page", defaultValue = "1") int page,
@@ -51,6 +61,7 @@ public class SysRoleinfoController {
      * @param map
      * @return
      */
+    @ApiOperation(value = "角色-查询角色列表", notes = "方法说明")
     @PostMapping("/addingRoleInfo")
     public ResultVO addingSubsystems(@RequestBody Map<String,Object> map){
         return ResultStruct.success(this.SysRoleinfoService.insertSelective(this.getSysRoleinfo(map)));
@@ -73,6 +84,8 @@ public class SysRoleinfoController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "角色-查询角色详情", notes = "方法说明")
+    @ApiImplicitParam(name = "id", value = "角色编号", dataType = "int")
     @PostMapping("/queryRoleInfoById")
     public ResultVO queryRoleInfoById(@RequestParam(value = "id")String id){
         return ResultStruct.success(this.SysRoleinfoService.selectByPrimaryKey(id));
@@ -83,6 +96,7 @@ public class SysRoleinfoController {
      * @param map
      * @return
      */
+    @ApiOperation(value = "角色-编辑角色信息", notes = "方法说明")
     @PostMapping("/editRoleInfo")
     public ResultVO editRoleInfo(@RequestBody Map<String,Object> map){
 
@@ -94,6 +108,8 @@ public class SysRoleinfoController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "角色-删除角色信息", notes = "方法说明")
+    @ApiImplicitParam(name = "id", value = "角色编号", dataType = "int")
     @PostMapping("/deleteRoleInfoById")
     public ResultVO deleteSubsystems(@RequestParam(value = "id")String id){
         return ResultStruct.success(this.SysRoleinfoService.deleteByPrimaryKey(id));
@@ -103,6 +119,8 @@ public class SysRoleinfoController {
      *  角色-查询角色的权限
      * @return
      */
+    @ApiOperation(value = "角色-查询角色的权限", notes = "方法说明")
+    @ApiImplicitParam(name = "id", value = "角色编号", dataType = "int")
     @PostMapping("/permissionsToQueryRoles")
     public ResultVO permissionsToQueryRoles(@RequestParam(value = "id")String id){
         return ResultStruct.success(this.SysRoleinfoService.permissionsToQueryRoles(id));
@@ -113,6 +131,11 @@ public class SysRoleinfoController {
      * @param map
      * @return
      */
+    @ApiOperation(value = "角色-权限分配", notes = "方法说明")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "roleId", value = "角色编号", dataType = "int"),
+            @ApiImplicitParam(name = "powerIds", value = "权限编号", dataType = "int")
+    })
     @PostMapping("/allocationOfPermissions")
     public ResultVO allocationOfPermissions(@RequestBody Map<String,Object> map){
         return ResultStruct.success(this.SysRoleinfoService.allocationOfPermissions((String)map.get("roleId"),(List<String>)map.get("powerIds")));
