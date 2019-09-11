@@ -52,8 +52,8 @@ public class SysSystemnameController {
             SysSystemnameExample example) {
         PageHelper.startPage(page, limit);
         List<SysSystemname> list=this.sysSystemnameService.selectByExample(example);
-        PageInfo pageInfo = new PageInfo<>(list,limit);
-        return ResultStruct.successPage(list, pageInfo.getPageNum()
+        PageInfo pageInfo = new PageInfo<>(list);
+        return ResultStruct.successPage(pageInfo.getList(), pageInfo.getPageNum()
                 , pageInfo.getPageSize(), pageInfo.getTotal());
     }
 
