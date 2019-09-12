@@ -45,20 +45,19 @@ public class SysGroupinfoImpl implements SysGroupinfoService {
 
     @Override
     @Transactional
-    public int deleteByPrimaryKey(String id,int count) {
-        Integer counts=this.sysGroupinfoMapper.queryGrouplinkpowerByGroupId(id);
-        if(null!=counts && counts>0 && count==1){
-            throw new BizException("20001","该一级菜单下有权限，是否删除!");
-        }else{
-            if(null!=counts && counts>0){
-                //删除子菜单
-                this.sysGrouplinkpowerMapper.deleteGroupPower(id);
-                //删除子菜单及其关联
-                this.sysGrouplinkpowerMapper.deleteGrouplinkpower(id);
-            }
+    public int deleteByPrimaryKey(String id) {
+        try {
+            //删除子菜单Id
+            sysGrouplinkpowerMapper.deleteGroupPower(id);
             //删除一级菜单
-            return this.sysGroupinfoMapper.deleteByPrimaryKey(id);
+            int num = this.sysGroupinfoMapper.deleteByPrimaryKey(id);
+            //删除子菜单及其关联
+            this.sysGrouplinkpowerMapper.deleteGrouplinkpower(id);
+            return num;
+        }catch(Exception e){
+           throw new BizException("20002","一级菜单删除失败",e);
         }
+
     }
 
     @Override
@@ -66,7 +65,7 @@ public class SysGroupinfoImpl implements SysGroupinfoService {
     public int insertSelective(SysGroupinfo record) {
         Integer counts=this.sysGroupinfoMapper.queryGroupByName(record.getGroupname());
         if(null!=counts && counts>0){
-            throw new BizException("20001","该一级菜单重复！");
+            throw new BizException("20001","该一级菜单名称已存在！");
         }else{
             try {
                 record.setId(ToolUtils.getPowerKey(port));

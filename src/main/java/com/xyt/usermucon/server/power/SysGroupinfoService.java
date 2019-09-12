@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public interface SysGroupinfoService {
 
-    int deleteByPrimaryKey(String id, int count);
+    int deleteByPrimaryKey(String id);
 
     int insertSelective(SysGroupinfo record);
 

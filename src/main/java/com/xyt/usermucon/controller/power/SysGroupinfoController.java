@@ -2,6 +2,7 @@ package com.xyt.usermucon.controller.power;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xyt.usermucon.common.BizException;
 import com.xyt.usermucon.dto.power.SysGroupinfo;
 import com.xyt.usermucon.dto.power.SysPowerinfo;
 import com.xyt.usermucon.server.power.SysGroupinfoService;
@@ -11,9 +12,11 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lh.model.ResultVO;
 import lh.model.ResultVOPage;
+import lh.model.ResultVOTotal;
 import lh.units.ResultStruct;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -156,10 +159,20 @@ public class SysGroupinfoController {
         //子菜单列表
         PageHelper.startPage(page, limit);
         List<SysPowerinfo> sysPowerinfo = this.sysSysGroupinfoService.selectPowerinfo(id);
-        PageInfo pageInfo = new PageInfo<>(sysPowerinfo,limit);
-        map.put("sysPowerinfo",sysPowerinfo);
+        PageInfo<SysPowerinfo> pageInfo = new PageInfo<>(sysPowerinfo);
+        map.put("sysPowerinfo",pageInfo.getList());
         return ResultStruct.successPage(map, pageInfo.getPageNum()
                 , pageInfo.getPageSize(), pageInfo.getTotal());
+    }
+
+    @ApiOperation(value = "查询一级菜单详情---不带分页", notes = "方法说明不带分页")
+    @PostMapping("/queryGroupinfoByIdNoPage")
+    public ResultVOTotal queryGroupinfoByIdNoPage(@RequestParam(value = "id") String id) {
+        //一级菜单列表
+        SysGroupinfo sysGroupinfo = this.sysSysGroupinfoService.selectByPrimaryKey(id);
+        //子菜单列表
+        List<SysPowerinfo> list = this.sysSysGroupinfoService.selectPowerinfo(id);
+        return ResultStruct.successTotal(sysGroupinfo,list);
     }
 
     /**
@@ -171,6 +184,9 @@ public class SysGroupinfoController {
     @ApiOperation(value = "编辑一级菜单信息", notes = "方法说明")
     @PostMapping("/editGroupinfo")
     public ResultVO editGroupinfo(@RequestBody Map<String,Object> map) {
+        if(StringUtils.isEmpty(map.get("id"))){
+            throw new BizException("20001","传入的一级菜单的ID为空");
+        }
         return ResultStruct.success(this.sysSysGroupinfoService.updateByPrimaryKey(this.getGroup(map)));
     }
 
@@ -178,17 +194,15 @@ public class SysGroupinfoController {
      * 删除一级菜单信息
      *
      * @param id
-     * @param count 点击次数
      * @return
      */
     @ApiOperation(value = "删除一级菜单", notes = "方法说明")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "一级菜单编号", dataType = "String"),
-            @ApiImplicitParam(name = "count", value = "点击次数", dataType = "int")
     })
     @PostMapping("/deleteGroupinfo")
-    public ResultVO deleteGroupinfo(@RequestParam(value = "id")String id, @RequestParam(value = "count",required = false)int count) {
-        return ResultStruct.success(this.sysSysGroupinfoService.deleteByPrimaryKey(id, count));
+    public ResultVO deleteGroupinfo(@RequestParam(value = "id")String id) {
+        return ResultStruct.success(this.sysSysGroupinfoService.deleteByPrimaryKey(id));
     }
 }
 

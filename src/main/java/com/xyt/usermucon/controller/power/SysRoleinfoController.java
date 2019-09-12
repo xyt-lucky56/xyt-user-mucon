@@ -2,6 +2,7 @@ package com.xyt.usermucon.controller.power;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xyt.usermucon.common.BizException;
 import com.xyt.usermucon.dto.power.SysRoleinfo;
 import com.xyt.usermucon.dto.power.SysRoleinfoExample;
 import com.xyt.usermucon.server.power.SysRoleinfoService;
@@ -14,6 +15,7 @@ import lh.model.ResultVOPage;
 import lh.units.ResultStruct;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -99,7 +101,9 @@ public class SysRoleinfoController {
     @ApiOperation(value = "角色-编辑角色信息", notes = "方法说明")
     @PostMapping("/editRoleInfo")
     public ResultVO editRoleInfo(@RequestBody Map<String,Object> map){
-
+        if(StringUtils.isEmpty(map.get("id"))){
+            throw new BizException("20001","传入的用户的角色ID为空");
+        }
         return ResultStruct.success(this.SysRoleinfoService.updateByPrimaryKey(this.getSysRoleinfo(map)));
     }
 

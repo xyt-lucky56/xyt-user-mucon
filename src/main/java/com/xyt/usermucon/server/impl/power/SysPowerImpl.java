@@ -45,7 +45,7 @@ public class SysPowerImpl implements SysPowerService {
     public int insertSelective(SysPowerinfo record) {
         Integer counts = this.SysPowerinfoMapper.queryPowerCountByName(record.getPowername());
         if (null != counts && counts > 0) {
-            throw new BizException("20001", "子菜单名称重复！");
+            throw new BizException("20001", "子菜单名称已经存在！");
 
         }
         try {

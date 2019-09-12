@@ -380,7 +380,7 @@
         <result column="sortNo" jdbcType="INTEGER" property="sortno"/>
         <result column="initPage" jdbcType="VARCHAR" property="initpage"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
-        <collection property="sysGroupinfo" ofType="com.xyt.usermucon.dto.power.SysGroupinfo">
+        <collection property="list" ofType="com.xyt.usermucon.dto.power.SysGroupinfo">
             <id column="groupId" jdbcType="VARCHAR" property="groupId"/>
             <result column="groupName" jdbcType="VARCHAR" property="groupname"/>
             <result column="systemName" jdbcType="VARCHAR" property="systemname"/>
@@ -393,12 +393,20 @@
     </resultMap>
     <!--查询所有权限系统 -->
     <select id="queryPermissionsMeun" parameterType="java.lang.String" resultMap="permissionsMeunMap">
-        select s.id ,s.systemName,g.id as groupId,g.groupName
+        select s.id ,
+               s.systemName,
+               g.id as groupId,
+               g.groupName,
+               g.picPath,
+               g.picName,
+               g.isExpand,
+               g.sortNo,
+               g.remark
         from sys_groupinfo g
         left join sys_systemname s on g.systemName=s.systemName
         <where>
-            <if test=" _parameter != null and _parameter != '' ">
-                INSTR(s.systemName, #{name}) > 0 or INSTR(g.groupName, #{name}) > 0
+            <if test=" name != null and name != '' ">
+                s.systemName = #{name,jdbcType=VARCHAR}
             </if>
         </where>
     </select>

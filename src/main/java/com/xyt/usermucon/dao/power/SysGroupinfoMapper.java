@@ -125,7 +125,7 @@ public interface SysGroupinfoMapper {
      * @param name
      * @return
      */
-    List<SysSystemname> queryPermissionsMeun(String name);
+    List<SysSystemname> queryPermissionsMeun(@Param("name") String name);
 
     /**
      * 全查询一级菜单

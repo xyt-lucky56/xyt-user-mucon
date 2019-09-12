@@ -7,13 +7,17 @@ public class BizException extends RuntimeException {
         super();
     }
 
-    public BizException(String code,String message) {
-        super(message);
+    public BizException(Throwable cause) {
+        super(cause);
+    }
+
+    public BizException(String code,String msg) {
+        super(msg);
         this.code=code;
     }
 
-    public BizException(String code,String message, Throwable cause) {
-        super(message, cause);
+    public BizException(String code,String msg, Throwable cause) {
+        super(msg, cause);
         this.code=code;
     }
 
@@ -32,4 +36,5 @@ public class BizException extends RuntimeException {
     public void setMsg(String msg) {
         this.msg = msg;
     }
+
 }
