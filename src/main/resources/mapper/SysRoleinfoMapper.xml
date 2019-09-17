@@ -293,8 +293,8 @@
   <select id="queryPermissions" parameterType="java.lang.String"  resultMap="permissionsMap">
     select p.id as powerId,p.powerName,g.id as groupId,g.groupName
            from sys_groupinfo g
-           left JOIN sys_grouplinkpower gp ON gp.groupId = g.id
-           left join sys_powerinfo p ON p.id = gp.powerId
+           inner join sys_grouplinkpower gp ON gp.groupId = g.id
+           inner join sys_powerinfo p ON p.id = gp.powerId
             where g.systemName=#{systemname}
   </select>
 
@@ -329,9 +329,9 @@
   <select id="permissionsToQueryRoles"  parameterType="java.lang.String" resultMap="permissionsMap">
     select p.id as powerId,p.powerName,g.id as groupId,g.groupName
             from sys_groupinfo g
-            left join sys_grouplinkpower gp ON gp.groupId = g.id
-            left join sys_powerinfo p ON p.id = gp.powerId
-            left join sys_rolelinkpower r ON r.powerId = p.id and r.roleId=#{id}
+            inner join sys_grouplinkpower gp ON gp.groupId = g.id
+            inner join sys_powerinfo p ON p.id = gp.powerId
+            inner join sys_rolelinkpower r ON r.powerId = p.id and r.roleId=#{id}
         where g.systemName=#{systemname}
   </select>
 
