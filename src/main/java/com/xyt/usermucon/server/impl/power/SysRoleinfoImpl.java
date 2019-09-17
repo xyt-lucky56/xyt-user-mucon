@@ -103,7 +103,7 @@ public class SysRoleinfoImpl implements SysRoleinfoService {
         List<SysGrouplinkpower> list=this.SysRoleinfoMapper.queryRoleGroupPower(roleId);
         if(null!=list && !list.isEmpty()){
             //该角色之前有权限,删除旧的关联权限
-            this.SysRoleinfoMapper.deleteRolelinkpower(roleId,powerIds);
+            this.SysRoleinfoMapper.deleteRolelinkpower(roleId);
         }
         if(null!=powerIds && !powerIds.isEmpty()){
             //准备数据

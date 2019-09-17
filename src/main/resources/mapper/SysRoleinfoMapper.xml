@@ -362,11 +362,8 @@
   </insert>
 
   <!--删除角色权限-->
-  <delete id="deleteRolelinkpower">
-      delete from sys_rolelinkpower where  roleId=#{roleId} and  powerId in
-      <foreach collection="powerIds" index="index" item="item" open="(" separator="," close=")">
-          #{item}
-      </foreach>
+  <delete id="deleteRolelinkpower" parameterType="java.lang.String">
+      delete from sys_rolelinkpower where  roleId=#{roleId}
   </delete>
 
 </mapper>

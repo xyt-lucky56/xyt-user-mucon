@@ -132,8 +132,7 @@ public interface SysRoleinfoMapper {
     /**
      * 删除角色权限
      * @param roleId
-     * @param powerIds
      * @return
      */
-    int deleteRolelinkpower(@Param("roleId") String roleId, @Param("powerIds") List<String> powerIds);
+    int deleteRolelinkpower(@Param("roleId") String roleId);
 }
