@@ -8,6 +8,8 @@ import com.xyt.usermucon.dto.power.SysRoleinfo;
 import com.xyt.usermucon.dto.power.SysRoleinfoExample;
 import com.xyt.usermucon.dto.power.SysRolelinkpower;
 import com.xyt.usermucon.server.power.SysRoleinfoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,7 @@ import java.util.Map;
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Service
 public class SysRoleinfoImpl implements SysRoleinfoService {
-
+     private Logger logger = LoggerFactory.getLogger(SysRoleinfoImpl.class);
     @Autowired
     private SysRoleinfoMapper SysRoleinfoMapper;
 
@@ -111,6 +113,7 @@ public class SysRoleinfoImpl implements SysRoleinfoService {
             for (String powerId:powerIds) {
                 SysRolelinkpower sysRolelinkpower=new SysRolelinkpower();
                 try {
+                    logger.info("生成的逻辑主键为="+ToolUtils.getPowerKey(port));
                     sysRolelinkpower.setId(ToolUtils.getPowerKey(port));
                 } catch (Exception e) {
                     e.printStackTrace();
