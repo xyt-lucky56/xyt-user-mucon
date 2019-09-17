@@ -447,4 +447,9 @@
         from sys_groupinfo g
                  left join sys_systemname s on g.systemName = s.systemName
     </select>
+
+    <!-- 同步一级菜单中的系统名称-->
+    <update id="updateSystemNameFromGroupinfo" parameterType="java.lang.String">
+        update sys_groupinfo set systemName=#{newSystemName} where systemName=#{oldSystemName}
+    </update>
 </mapper>

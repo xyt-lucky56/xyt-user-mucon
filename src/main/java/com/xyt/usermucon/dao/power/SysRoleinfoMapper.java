@@ -135,4 +135,12 @@ public interface SysRoleinfoMapper {
      * @return
      */
     int deleteRolelinkpower(@Param("roleId") String roleId);
+
+    /**
+     * 同步角色中的系统名称
+     * @param newSystemName
+     * @param oldSystemName
+     */
+    int updateSystemNameFromRoleinfo(@Param("newSystemName")String newSystemName,@Param("oldSystemName")String oldSystemName);
+
 }

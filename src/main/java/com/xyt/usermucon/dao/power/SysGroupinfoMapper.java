@@ -136,4 +136,12 @@ public interface SysGroupinfoMapper {
     List<SysGroupinfo> selectSysGroupinfo(@Param("systemname")String systemname,@Param("searchName")String searchName);
 
     List<SysGroupinfo> selectSysGroupInfoTest();
+
+    /**
+     * 同步一级菜单中的系统名称
+     * @param newSystemName
+     * @param oldSystemName
+     */
+    int updateSystemNameFromGroupinfo(@Param("newSystemName")String newSystemName,@Param("oldSystemName")String oldSystemName);
+
 }

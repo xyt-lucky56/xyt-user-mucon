@@ -366,4 +366,9 @@
       delete from sys_rolelinkpower where  roleId=#{roleId}
   </delete>
 
+  <!-- 同步角色中的系统名称-->
+  <update id="updateSystemNameFromRoleinfo" parameterType="java.lang.String">
+      update sys_roleinfo set systemName=#{newSystemName} where systemName=#{oldSystemName}
+  </update>
+
 </mapper>
