@@ -27,7 +27,7 @@ public interface SysRoleinfoService {
      * 角色-查询角色的权限
      * @return
      */
-    Map<String,Object> permissionsToQueryRoles(String id);
+    Map<String,Object> permissionsToQueryRoles(String id,String systemname);
 
     /**
      * 权限分配

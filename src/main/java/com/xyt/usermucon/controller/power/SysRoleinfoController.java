@@ -126,8 +126,8 @@ public class SysRoleinfoController {
     @ApiOperation(value = "角色-查询角色的权限", notes = "方法说明")
     @ApiImplicitParam(name = "id", value = "角色编号", dataType = "int")
     @PostMapping("/permissionsToQueryRoles")
-    public ResultVO permissionsToQueryRoles(@RequestParam(value = "id")String id){
-        return ResultStruct.success(this.SysRoleinfoService.permissionsToQueryRoles(id));
+    public ResultVO permissionsToQueryRoles(@RequestParam(value = "id")String id,@RequestParam(value = "systemname")String systemname){
+        return ResultStruct.success(this.SysRoleinfoService.permissionsToQueryRoles(id,systemname));
     }
 
     /**

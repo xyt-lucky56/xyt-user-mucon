@@ -292,9 +292,10 @@
   <!--角色-查询所有权限 -->
   <select id="queryPermissions" parameterType="java.lang.String"  resultMap="permissionsMap">
     select p.id as powerId,p.powerName,g.id as groupId,g.groupName
-            from sys_powerinfo p
-           left join sys_grouplinkpower gp on p.id=gp.powerId
-           left join sys_groupinfo g on gp.groupId=g.id
+           from sys_groupinfo g
+           left JOIN sys_grouplinkpower gp ON gp.groupId = g.id
+           left join sys_powerinfo p ON p.id = gp.powerId
+            where g.systemName=#{systemname}
   </select>
 
   <resultMap id="permissionsMap" type="com.xyt.usermucon.dto.power.SysGroupinfo">
@@ -325,13 +326,13 @@
 
 
   <!--角色-查询角色的权限 -->
-  <select id="permissionsToQueryRoles"  resultMap="permissionsMap">
+  <select id="permissionsToQueryRoles"  parameterType="java.lang.String" resultMap="permissionsMap">
     select p.id as powerId,p.powerName,g.id as groupId,g.groupName
-    from sys_rolelinkpower r
-           left join sys_powerinfo p on r.powerId=p.id
-           left join sys_grouplinkpower gp on p.id=gp.powerId
-           left join sys_groupinfo g on gp.groupId=g.id
-        where r.roleId=#{id}
+            from sys_groupinfo g
+            left join sys_grouplinkpower gp ON gp.groupId = g.id
+            left join sys_powerinfo p ON p.id = gp.powerId
+            left join sys_rolelinkpower r ON r.powerId = p.id and r.roleId=#{id}
+        where g.systemName=#{systemname}
   </select>
 
 

@@ -107,13 +107,13 @@ public interface SysRoleinfoMapper {
      * 角色-查询角色的权限
      * @return
      */
-    List<SysPowerinfo> permissionsToQueryRoles(String id);
+    List<SysPowerinfo> permissionsToQueryRoles(@Param("id") String id,@Param("systemname") String systemname);
 
     /**
      * 角色-查询所有权限
      * @return
      */
-    List<SysPowerinfo> queryPermissions();
+    List<SysPowerinfo> queryPermissions(@Param("systemname") String systemname);
 
     /**
      *  获取该角色的所有权限

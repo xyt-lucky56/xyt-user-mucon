@@ -83,12 +83,12 @@ public class SysRoleinfoImpl implements SysRoleinfoService {
      * @return
      */
     @Override
-    public Map<String,Object> permissionsToQueryRoles(String id){
+    public Map<String,Object> permissionsToQueryRoles(String id,String systemname){
         Map<String,Object> map=new HashMap<String,Object>();
         //角色-查询角色的权限
-        map.put("roleList",this.SysRoleinfoMapper.permissionsToQueryRoles(id));
+        map.put("roleList",this.SysRoleinfoMapper.permissionsToQueryRoles(id,systemname));
         //角色-查询所有权限
-        map.put("list",this.SysRoleinfoMapper.queryPermissions());
+        map.put("list",this.SysRoleinfoMapper.queryPermissions(systemname));
         return map;
     }
 
