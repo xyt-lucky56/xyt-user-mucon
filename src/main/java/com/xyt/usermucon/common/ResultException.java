@@ -36,7 +36,7 @@ public class ResultException {
         map.put("msg",be.getMessage());
         map.put("data",null);
         map.put("count",0);
-        sendMsg(be);
+        //sendMsg(be);
         return map;
     }
 
