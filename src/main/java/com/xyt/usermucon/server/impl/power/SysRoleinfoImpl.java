@@ -127,5 +127,15 @@ public class SysRoleinfoImpl implements SysRoleinfoService {
         }
         return map;
     }
+
+    /**
+    *@Author luolei
+    *@Date  2019/9/19 14:51
+    *@Description 根据用户的ID和系统名称查询角色信息
+    */
+    @Transactional
+    public List<Map<String,Object>> selectRoleInfoByIdAndSystem(String userId,String systemname){
+        return SysRoleinfoMapper.selectRoleInfoByIdAndSystem(userId,systemname);
+    }
 }
 

@@ -1,6 +1,7 @@
 package com.xyt.usermucon.dao.power;
 
 import java.util.List;
+import java.util.Map;
 
 import com.xyt.usermucon.dto.power.*;
 import org.apache.ibatis.annotations.Mapper;
@@ -143,4 +144,10 @@ public interface SysRoleinfoMapper {
      */
     int updateSystemNameFromRoleinfo(@Param("newSystemName")String newSystemName,@Param("oldSystemName")String oldSystemName);
 
+    /**
+    *@Author luolei
+    *@Date  2019/9/19 14:49
+    *@Description 根据用户ID和系统名称查询角色信息
+    */
+    List<Map<String,Object>> selectRoleInfoByIdAndSystem(@Param("userId") String userId, @Param("systemname") String systemname);
 }

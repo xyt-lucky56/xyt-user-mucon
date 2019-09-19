@@ -10,8 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +24,7 @@ import java.util.Map;
  * @Description
  */
 @Service
+@Transactional
 public class SysUserInfoServiceImpl implements SysUserInfoService {
     private Logger logger = LoggerFactory.getLogger(SysUserInfoServiceImpl.class);
 
@@ -83,6 +87,7 @@ public class SysUserInfoServiceImpl implements SysUserInfoService {
         SysUserinfo sysUserinfo = sysUserinfoMapper.selectByPrimaryKey(userId);
         String deptid = sysUserinfo.getDeptid();
         Map<String, Object> userMap = ToolUtils.convertBeanToMap(sysUserinfo);
+        userMap.put("createtime",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(sysUserinfo.getCreatetime()));
         List<Map<String, Object>> deptInfoList = sysUserinfoMapper.selectDeptInfo();
         for(Map<String,Object> map:deptInfoList){
             if(map.get("id").equals(deptid)){
@@ -129,6 +134,18 @@ public class SysUserInfoServiceImpl implements SysUserInfoService {
         return sysUserinfoMapper.selectByExample(example);
     }
 
+    /**
+    *@Description 分配角色
+    *@Author  luolei
+    *@Date 2019/9/19 9:14
+    *@Param
+    *@Return
+    *@Exception
+    *
+    **/
+    public int allocateRoleToUser(Map<String,Object> map){
+        return sysUserinfoMapper.allocateRoleToUser(map);
+    }
 
     private List<Map<String,Object>> addDeptInfoToUser(List<SysUserinfo> userinfoList,
                                                        List<Map<String, Object>> deptInfoList){
@@ -141,6 +158,7 @@ public class SysUserInfoServiceImpl implements SysUserInfoService {
                 if(id.equals(sysUserinfo.getDeptid())){
                     Map<String, Object> beanToMap = ToolUtils.convertBeanToMap(sysUserinfo);
                     beanToMap.put("deptName",deptName);
+                    beanToMap.put("createtime",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(sysUserinfo.getCreatetime()));
                     list.add(beanToMap);
                 }
             }

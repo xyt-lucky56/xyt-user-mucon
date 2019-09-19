@@ -27,4 +27,6 @@ public interface SysUserInfoService {
     public List<Map<String,Object>> selectDeptInfo();
 
     public List<SysUserinfo> selectUserInfoByExample(String username,String mobile);
+
+    public int allocateRoleToUser(Map<String,Object> map);
 }

@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +57,23 @@ public class SysRoleinfoController {
         PageInfo pageInfo = new PageInfo<>(list,limit);
         return ResultStruct.successPage(list, pageInfo.getPageNum()
                 , pageInfo.getPageSize(), pageInfo.getTotal());
+    }
+    /**
+    *@Description 根据系统名称查询角色列表
+    *@Author  luolei
+    *@Date 2019/9/19 10:25
+    *@Param
+    *@Return
+    *@Exception
+    *
+    **/
+    @PostMapping("/queryRoleBySystem")
+    public ResultVO queryRoleInfo(String systemname) {
+        SysRoleinfoExample example = new SysRoleinfoExample();
+        SysRoleinfoExample.Criteria criteria = example.createCriteria();
+        criteria.andSystemnameEqualTo(systemname);
+        List<SysRoleinfo> list=this.SysRoleinfoService.selectByExample(example);
+        return ResultStruct.success(list);
     }
 
     /**
@@ -146,5 +164,18 @@ public class SysRoleinfoController {
     }
 
 
+    @PostMapping("/searchRoleByIdAndSystem")
+    public ResultVO selectRoleInfoByIdAndSystem(@RequestParam("userId") String userId,
+                                                @RequestParam("systemname") String systemname){
+        SysRoleinfoExample example = new SysRoleinfoExample();
+        SysRoleinfoExample.Criteria criteria = example.createCriteria();
+        criteria.andSystemnameEqualTo(systemname);
+        List<SysRoleinfo> list=this.SysRoleinfoService.selectByExample(example);
+        List<Map<String, Object>> rolelist = SysRoleinfoService.selectRoleInfoByIdAndSystem(userId, systemname);
+        Map<String,Object> result = new HashMap<>();
+        result.put("list",list);
+        result.put("roleList",rolelist);
+        return ResultStruct.success(result);
+    }
 }
 

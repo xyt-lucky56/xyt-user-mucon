@@ -371,4 +371,12 @@
       update sys_roleinfo set systemName=#{newSystemName} where systemName=#{oldSystemName}
   </update>
 
+  <!-- -->
+  <select id="selectRoleInfoByIdAndSystem" parameterType="string" resultType="map">
+
+    select id,roleName,sortNo
+    from sys_roleinfo
+    where id in (select t.roleId from sys_userlinkrole t where t.userId=#{userId,jdbcType=VARCHAR})
+    and systemName = #{systemname,jdbcType=VARCHAR}
+  </select>
 </mapper>

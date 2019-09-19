@@ -36,5 +36,11 @@ public interface SysRoleinfoService {
      * @return
      */
     public Map<String,Object> allocationOfPermissions(String roleId, List<String> powerIds);
+    /**
+    *@Author luolei
+    *@Date  2019/9/19 14:52
+    *@Description
+    */
+    public List<Map<String,Object>> selectRoleInfoByIdAndSystem(String userId,String systemname);
 }
 
