@@ -152,13 +152,13 @@ public class SysUserInfoServiceImpl implements SysUserInfoService {
         List<Map<String,Object>> list  = new ArrayList<>();
 
         for(SysUserinfo sysUserinfo:userinfoList){
+            Map<String, Object> beanToMap = ToolUtils.convertBeanToMap(sysUserinfo);
+            beanToMap.put("createtime",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(sysUserinfo.getCreatetime()));
             for(Map<String,Object> map:deptInfoList){
                 String id = String.valueOf(map.get("id"));
                 String deptName = String.valueOf(map.get("deptName"));
                 if(id.equals(sysUserinfo.getDeptid())){
-                    Map<String, Object> beanToMap = ToolUtils.convertBeanToMap(sysUserinfo);
                     beanToMap.put("deptName",deptName);
-                    beanToMap.put("createtime",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(sysUserinfo.getCreatetime()));
                     list.add(beanToMap);
                 }
             }

@@ -60,7 +60,7 @@ public class SysUserInfoController {
             resultVO.setCode(0);
             resultVO.setMsg("新增用户成功");
             resultVO.setCount(userNum);
-            resultVO.setData(sysUserinfo.getId());
+            resultVO.setData(sysUserinfo);
             return resultVO;
         } catch (IllegalAccessException e) {
             e.printStackTrace();
