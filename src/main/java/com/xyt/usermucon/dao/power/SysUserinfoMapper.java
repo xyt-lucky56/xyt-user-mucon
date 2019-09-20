@@ -102,4 +102,6 @@ public interface SysUserinfoMapper {
     List<Map<String,Object>> selectDeptInfo();
 
     int allocateRoleToUser(Map<String, Object> map);
+
+    int deleteUserLinkRole(@Param("userId") String userId);
 }

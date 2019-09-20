@@ -275,7 +275,10 @@ public class SysUserInfoController {
         logger.info("userId="+userId+",roles="+roles);
          int num=0;
           try {
-            for(String roleId:roles){
+            //删除之前的绑定关系
+              int linkRoleNum = sysUserInfoService.deleteUserLinkRole(userId);
+              logger.info("删除绑定的记录数为="+linkRoleNum);
+              for(String roleId:roles){
                 Map<String,Object> map = new HashMap<>();
                 map.put("id",ToolUtils.getPowerKey((short)port));
                 map.put("userId",userId);

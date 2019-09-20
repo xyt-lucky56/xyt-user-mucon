@@ -165,4 +165,17 @@ public class SysUserInfoServiceImpl implements SysUserInfoService {
         }
         return list;
     }
+
+    /**
+    *@Description 根据用户ID删除用户关联角色记录
+    *@Author  luolei
+    *@Date 2019/9/20 9:21
+    *@Param
+    *@Return
+    *@Exception
+    *
+    **/
+    public int deleteUserLinkRole(String userId){
+       return sysUserinfoMapper.deleteUserLinkRole(userId);
+    }
 }

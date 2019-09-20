@@ -29,4 +29,6 @@ public interface SysUserInfoService {
     public List<SysUserinfo> selectUserInfoByExample(String username,String mobile);
 
     public int allocateRoleToUser(Map<String,Object> map);
+
+    public int deleteUserLinkRole(String userId);
 }

@@ -501,4 +501,9 @@
         values
         (#{id,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{roleId,jdbcType=VARCHAR})
     </insert>
+
+    <!-- 删除用户角色关联表信息-->
+    <delete id="deleteUserLinkRole" parameterType="string">
+        delete from sys_userlinkrole where userId = #{userId,jdbcType=VARCHAR}
+    </delete>
 </mapper>
